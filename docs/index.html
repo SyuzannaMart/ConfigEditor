@@ -446,12 +446,9 @@
         dup.className = 'small ghost';
         dup.textContent = 'Duplicate';
         dup.onclick = () => { value.splice(i+1,0,deepClone(item)); renderConfig(); };
-        const del = document.createElement('button');
-        del.className = 'small danger';
-        del.textContent = 'Delete';
-        del.onclick = () => { deleteByPath(config, path.concat(i)); renderConfig(); };
+        
         ctr.appendChild(dup);
-        ctr.appendChild(del);
+     
         itemWrap.appendChild(ctr);
 
         list.appendChild(itemWrap);
