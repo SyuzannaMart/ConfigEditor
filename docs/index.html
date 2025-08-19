@@ -133,9 +133,8 @@
 <script>
   let config = [];
   let originalAssignment = 'const config =';
-  let dragCtx = null; // { pathKey, fromIndex }
+  let dragCtx = null; 
 
-  // ---------- utils ----------
   const isObj = v => v && typeof v === 'object' && !Array.isArray(v);
   const deepClone = v => (typeof structuredClone === 'function') ? structuredClone(v) : JSON.parse(JSON.stringify(v));
   function getByPath(obj, path){ return path.reduce((acc, key) => acc?.[key], obj); }
@@ -232,7 +231,7 @@
     return isLikelyImageUrl(value) || (keyLooksImage && typeof value === 'string' && value.trim() !== '');
   }
 
-  // ---------- import / export ----------
+
   function extractArrayLiteral(src){
     const first = src.indexOf('[');
     if (first === -1) return null;
@@ -313,7 +312,7 @@
     } catch (e) { alert('Export error: ' + (e?.message || e)); }
   }
 
-  // ---------- rendering ----------
+
   function renderConfig() {
     const container = document.getElementById('configContainer');
     container.innerHTML = '';
@@ -362,7 +361,6 @@
   function renderValue(value, path, labelText){
     const wrap = document.createElement('div');
 
-    // primitive / null  (updated with universal image preview)
     if (value === null || typeof value !== 'object'){
       const row = document.createElement('div');
       row.className = 'row';
@@ -428,13 +426,11 @@
       list.className = 'array-list';
       det.appendChild(list);
 
-      // items
       value.forEach((item, i) => {
         const itemWrap = document.createElement('div');
         itemWrap.className = 'array-item';
         itemWrap.dataset.index = i;
 
-        // drag handle
         const h = document.createElement('span');
         h.className = 'drag-handle';
         h.textContent = '⇅';
@@ -444,7 +440,6 @@
         child.style.marginLeft = '0';
         itemWrap.appendChild(child);
 
-        // per-item controls
         const ctr = document.createElement('div');
         ctr.className = 'controls';
         const dup = document.createElement('button');
@@ -462,10 +457,8 @@
         list.appendChild(itemWrap);
       });
 
-      // DnD for this array
       setupDnDForList(list, value, pathKeyOf(path));
 
-      // add controls
       const addCtr = document.createElement('div');
       addCtr.className = 'controls';
 
@@ -556,7 +549,6 @@
     return wrap;
   }
 
-  // === Generic DnD wiring for a vertical list of .array-item children ===
   function setupDnDForList(listEl, arrRef, pathKey){
     const items = Array.from(listEl.children).filter(el => el.classList.contains('array-item'));
     items.forEach((el, idx) => {
@@ -604,7 +596,6 @@
     renderConfig();
   }
 
-  // ---------- wire up ----------
   document.getElementById('copy').addEventListener('click', () => {
     const text = document.getElementById('outputConfig').value;
     navigator.clipboard.writeText(text).then(() => alert('Copied to clipboard!'))
