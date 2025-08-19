@@ -414,7 +414,7 @@
       return wrap;
     }
 
-    // array
+
     if (Array.isArray(value)){
       const det = document.createElement('details');
       det.open = true;
@@ -511,11 +511,7 @@
       // per-field delete
       const ctr = document.createElement('div');
       ctr.className = 'controls';
-      const del = document.createElement('button');
-      del.className = 'small danger';
-      del.textContent = `Delete "${k}"`;
-      del.onclick = () => { deleteByPath(config, path.concat(k)); renderConfig(); };
-      ctr.appendChild(del);
+     
       det.appendChild(ctr);
     });
 
